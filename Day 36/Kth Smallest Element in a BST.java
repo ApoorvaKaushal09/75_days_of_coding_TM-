@@ -1,17 +1,24 @@
+
 class Solution {
-    public int numTrees(int n) {
-        int dp[] = new int[n+1];
-        dp[0] = 1;
-        dp[1] = 1;
-        for(int i = 2; i <= n; i++)
+    // PriorityQueue<Integer> pq = new PriorityQueue<>();
+    public int kthSmallest(TreeNode root, int k) 
+    {
+        Stack<TreeNode> st = new Stack<>();
+        TreeNode curr = root;
+        
+        while(true)
         {
-            int l = 0, r = i-1;
-            while(l <= i-1)
-            {
-                dp[i]+= dp[l] * dp[r];
-                l++;r--;
+            while(curr != null)
+            {   
+                st.push(curr);
+                curr = curr.left;
             }
+            curr = st.pop();
+            if(--k == 0)
+                return curr.val;
+            
+            curr = curr.right;
         }
-        return dp[n];
     }
 }
+
